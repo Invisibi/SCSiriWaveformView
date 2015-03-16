@@ -56,9 +56,15 @@
     
     
     
-    [self.waveformView setWaveColor:[UIColor whiteColor]];
+    [self.waveformView setWaveColors:@[[UIColor colorWithRed:0.45 green:0.8 blue:0.87 alpha:1],
+                                       [UIColor colorWithRed:0.25 green:0.73 blue:0.57 alpha:1],
+                                       [UIColor colorWithRed:0.92 green:0.65 blue:0.21 alpha:1],
+                                       [UIColor colorWithRed:0.88 green:0.12 blue:0.4 alpha:1]]];
     [self.waveformView setPrimaryWaveLineWidth:3.0f];
     [self.waveformView setSecondaryWaveLineWidth:1.0];
+    [self.waveformView setPhaseShift:-0.1f];
+    [self.waveformView setIdleAmplitude:.2f];
+    self.waveformView.backgroundColor = [UIColor whiteColor];
 }
 
 

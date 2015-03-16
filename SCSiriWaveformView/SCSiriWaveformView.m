@@ -53,7 +53,7 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 
 - (void)setup
 {
-	self.waveColor = [UIColor whiteColor];
+	self.waveColors = @[[UIColor whiteColor]];
 	
 	self.frequency = kDefaultFrequency;
 	
@@ -102,23 +102,51 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 		CGFloat normedAmplitude = (1.5f * progress - 0.5f) * self.amplitude;
 		
 		CGFloat multiplier = MIN(1.0, (progress / 3.0f * 2.0f) + (1.0f / 3.0f));
-		[[self.waveColor colorWithAlphaComponent:multiplier * CGColorGetAlpha(self.waveColor.CGColor)] set];
-		
-		for (CGFloat x = 0; x<width + self.density; x += self.density) {
+
+        CGFloat lastX = 0;
+        CGFloat lastY = halfHeight;
+        for (CGFloat x = 0; x < width + self.density; x += self.density) {
+            CGContextMoveToPoint(context, lastX, lastY);
+
 			// We use a parable to scale the sinus wave, that has its peak in the middle of the view.
 			CGFloat scaling = -pow(1 / mid * (x - mid), 2) + 1;
-			
+
 			CGFloat y = scaling * maxAmplitude * normedAmplitude * sinf(2 * M_PI *(x / width) * self.frequency + self.phase) + halfHeight;
-			
-			if (x == 0) {
-				CGContextMoveToPoint(context, x, y);
-			} else {
-				CGContextAddLineToPoint(context, x, y);
-			}
-		}
-		
-		CGContextStrokePath(context);
-	}
+
+            UIColor *const waveColor = [self colorForPositionX:x width:width];
+            [[waveColor colorWithAlphaComponent:multiplier * CGColorGetAlpha(waveColor.CGColor)] set];
+            CGContextAddLineToPoint(context, x, y);
+            CGContextStrokePath(context);
+            lastX = x;
+            lastY = y;
+        }
+    }
+}
+
+- (UIColor *)colorForPositionX:(CGFloat)x width:(CGFloat)width
+{
+    CGFloat const distancePerColor = width / self.waveColors.count;
+    NSUInteger indexActiveColor = MIN((self.waveColors.count - 1), (NSUInteger)floor(x / distancePerColor));
+    UIColor *const activeColor = self.waveColors[indexActiveColor];
+    UIColor *const nextColor = self.waveColors[MIN(self.waveColors.count - 1,indexActiveColor + 1)];
+
+    UIColor *const blendedColor = [self blendIntoColor:activeColor fraction:(fmodf(x, distancePerColor) / distancePerColor)
+            ofColor:nextColor];
+
+    return blendedColor;
+}
+
+- (UIColor *)blendIntoColor:(UIColor *)originColor fraction:(CGFloat)fraction ofColor:(UIColor *)newColor
+{
+    fraction = MIN(1.f, MAX(0.f, fraction));
+    CGFloat beta = 1.f - fraction;
+    CGFloat r1, g1, b1, a1, r2, g2, b2, a2;
+    [originColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    [newColor getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+    CGFloat r = r1 * beta + r2 * fraction;
+    CGFloat g = g1 * beta + g2 * fraction;
+    CGFloat b = b1 * beta + b2 * fraction;
+    return [UIColor colorWithRed:r green:g blue:b alpha:1.f];
 }
 
 @end

@@ -22,6 +22,9 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 @property (nonatomic, assign) CGFloat phase;
 @property (nonatomic, assign) CGFloat amplitude;
 
+@property (nonatomic, strong) NSArray *blendedColorCache;
+@property (nonatomic, assign) CGFloat cacheValidForWidth;
+
 @end
 
 @implementation SCSiriWaveformView
@@ -53,6 +56,9 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 
 - (void)setup
 {
+    self.blendedColorCache = [[NSArray alloc] init];
+    self.cacheValidForWidth = 0.0f;
+
 	self.waveColors = @[[UIColor whiteColor]];
 	
 	self.frequency = kDefaultFrequency;
@@ -123,15 +129,26 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 
 - (UIColor *)colorForPositionX:(CGFloat)x width:(CGFloat)width
 {
+    if (self.cacheValidForWidth == width && x < self.blendedColorCache.count) {
+        return self.blendedColorCache[(NSUInteger)x];
+    }
+
+    NSMutableArray *const colorCache = [[NSMutableArray alloc] initWithCapacity:(NSUInteger)width];
     CGFloat const distancePerColor = width / self.waveColors.count;
-    NSUInteger indexActiveColor = MIN((self.waveColors.count - 1), (NSUInteger)floor(x / distancePerColor));
-    UIColor *const activeColor = self.waveColors[indexActiveColor];
-    UIColor *const nextColor = self.waveColors[MIN(self.waveColors.count - 1,indexActiveColor + 1)];
+    for (NSUInteger i = 0; i < width * 1.1; i++) {
 
-    UIColor *const blendedColor = [self blendIntoColor:activeColor fraction:(fmodf(x, distancePerColor) / distancePerColor)
-            ofColor:nextColor];
+        NSUInteger indexActiveColor = MIN((self.waveColors.count - 1), (NSUInteger)floor(i / distancePerColor));
+        UIColor *const activeColor = self.waveColors[indexActiveColor];
+        UIColor *const nextColor = self.waveColors[MIN(self.waveColors.count - 1,indexActiveColor + 1)];
+        UIColor *const blendedColor = [self blendIntoColor:activeColor fraction:(fmodf(i, distancePerColor) / distancePerColor)
+                ofColor:nextColor];
+        colorCache[i] = blendedColor;
+    }
+    self.blendedColorCache = colorCache;
+    self.cacheValidForWidth = width;
 
-    return blendedColor;
+    return self.blendedColorCache[(NSUInteger)x];
+
 }
 
 - (UIColor *)blendIntoColor:(UIColor *)originColor fraction:(CGFloat)fraction ofColor:(UIColor *)newColor

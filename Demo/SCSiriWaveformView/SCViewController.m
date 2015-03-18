@@ -64,6 +64,7 @@
     [self.waveformView setSecondaryWaveLineWidth:1.0];
     [self.waveformView setPhaseShift:-0.1f];
     [self.waveformView setIdleAmplitude:.2f];
+    [self.waveformView setDensity:10.f];
     self.waveformView.backgroundColor = [UIColor whiteColor];
 }
 

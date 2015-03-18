@@ -84,18 +84,16 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 	
 	[self.backgroundColor set];
 	CGContextFillRect(context, rect);
+
+    CGFloat halfHeight = CGRectGetHeight(self.bounds) / 2.0f;
+    CGFloat width = CGRectGetWidth(self.bounds);
+    CGFloat mid = width / 2.0f;
+
+    const CGFloat maxAmplitude = halfHeight - 4.0f; // 4 corresponds to twice the stroke width
 	
 	// We draw multiple sinus waves, with equal phases but altered amplitudes, multiplied by a parable function.
 	for (int i = 0; i < self.numberOfWaves; i++) {
-		CGContextRef context = UIGraphicsGetCurrentContext();
-		
 		CGContextSetLineWidth(context, (i == 0 ? self.primaryWaveLineWidth : self.secondaryWaveLineWidth));
-		
-		CGFloat halfHeight = CGRectGetHeight(self.bounds) / 2.0f;
-		CGFloat width = CGRectGetWidth(self.bounds);
-		CGFloat mid = width / 2.0f;
-		
-		const CGFloat maxAmplitude = halfHeight - 4.0f; // 4 corresponds to twice the stroke width
 		
 		// Progress is a value between 1.0 and -0.5, determined by the current wave idx, which is used to alter the wave's amplitude.
 		CGFloat progress = 1.0f - (CGFloat)i / self.numberOfWaves;

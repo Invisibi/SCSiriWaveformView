@@ -17,7 +17,7 @@
 		186F7BB018FAEC6A00CCC606 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186F7BAF18FAEC6A00CCC606 /* AVFoundation.framework */; };
 		186F7BF618FAF5B500CCC606 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 186F7BF518FAF5B500CCC606 /* Main_iPhone.storyboard */; };
 		186F7BFA18FAF77500CCC606 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F7BF918FAF77500CCC606 /* SCSiriWaveformView.m */; };
-		60655CEA1AB9719F000AAF9E /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60655CE91AB9719F000AAF9E /* Launch Screen.xib */; };
+		DF2AE8458703A6C3A353EC1A /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF2AED3DE92BD64220EC33C7 /* Launch Screen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		186F7BF518FAF5B500CCC606 /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
 		186F7BF818FAF77500CCC606 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
 		186F7BF918FAF77500CCC606 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
-		60655CE91AB9719F000AAF9E /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		DF2AED3DE92BD64220EC33C7 /* Launch Screen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +94,7 @@
 				186F7B8C18FAEC1100CCC606 /* SCViewController.h */,
 				186F7B8D18FAEC1100CCC606 /* SCViewController.m */,
 				186F7B7E18FAEC1100CCC606 /* Supporting Files */,
+				DF2AED3DE92BD64220EC33C7 /* Launch Screen.xib */,
 			);
 			name = Demo;
 			path = SCSiriWaveformView;
@@ -114,7 +115,6 @@
 			children = (
 				186F7BF818FAF77500CCC606 /* SCSiriWaveformView.h */,
 				186F7BF918FAF77500CCC606 /* SCSiriWaveformView.m */,
-				60655CE91AB9719F000AAF9E /* Launch Screen.xib */,
 			);
 			name = SCSiriWaveformView;
 			path = ../SCSiriWaveformView;
@@ -175,7 +175,7 @@
 			files = (
 				186F7BF618FAF5B500CCC606 /* Main_iPhone.storyboard in Resources */,
 				186F7B8B18FAEC1100CCC606 /* Main_iPad.storyboard in Resources */,
-				60655CEA1AB9719F000AAF9E /* Launch Screen.xib in Resources */,
+				DF2AE8458703A6C3A353EC1A /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

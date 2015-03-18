@@ -21,7 +21,13 @@ IB_DESIGNABLE
 @property (nonatomic, assign) NSUInteger numberOfWaves;
 
 /*
- * Array of colors to use when drawing the waves
+ * Color to use when drawing the waves. This property will be ignored if self.waveColors is set.
+ * Default: white
+ */
+@property (nonatomic, strong) IBInspectable UIColor *waveColor;
+
+/*
+ * Array of colors to use when drawing the waves. If this property is set, self.waveColor will be ignored
  * Default: white
  */
 @property (nonatomic, strong) IBInspectable NSArray *waveColors;

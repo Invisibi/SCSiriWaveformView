@@ -59,7 +59,8 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
     self.blendedColorCache = [[NSArray alloc] init];
     self.cacheValidForWidth = 0.0f;
 
-	self.waveColors = @[[UIColor whiteColor]];
+    self.waveColor = [UIColor whiteColor];
+    self.waveColors = @[];
 	
 	self.frequency = kDefaultFrequency;
 	
@@ -72,6 +73,15 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 	
 	self.primaryWaveLineWidth = kDefaultPrimaryLineWidth;
 	self.secondaryWaveLineWidth = kDefaultSecondaryLineWidth;
+}
+
+- (NSArray *)waveColors
+{
+    if (!_waveColors || _waveColors.count <= 0) {
+        return @[self.waveColor];
+    } else {
+        return _waveColors;
+    }
 }
 
 - (void)updateWithLevel:(CGFloat)level

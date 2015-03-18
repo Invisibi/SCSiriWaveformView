@@ -4,6 +4,8 @@ Same as original, but this fork supports gradient color waveforms:
 
 Also very minor performance improvements were made.
 
+Thanks to https://github.com/stefanceriu/SCSiriWaveformView
+
 ## Original SCSiriWaveformView
 
 UIView subclass that reproduces the waveform effect seen in Siri on iOS 7.

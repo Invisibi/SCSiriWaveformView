@@ -18,6 +18,9 @@ static const CGFloat kDefaultPrimaryLineWidth   = 3.0f;
 static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 
 @interface SCSiriWaveformView ()
+{
+    NSArray *_waveColors;
+}
 
 @property (nonatomic, assign) CGFloat phase;
 @property (nonatomic, assign) CGFloat amplitude;
@@ -56,8 +59,7 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 
 - (void)setup
 {
-    self.blendedColorCache = [[NSArray alloc] init];
-    self.cacheValidForWidth = 0.0f;
+    [self invalidateBlendedColorCache];
 
     self.waveColor = [UIColor whiteColor];
     self.waveColors = @[];
@@ -73,6 +75,18 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 	
 	self.primaryWaveLineWidth = kDefaultPrimaryLineWidth;
 	self.secondaryWaveLineWidth = kDefaultSecondaryLineWidth;
+}
+
+- (void)setWaveColor:(UIColor *)waveColor
+{
+    _waveColor = waveColor;
+    [self invalidateBlendedColorCache];
+}
+
+- (void)setWaveColors:(NSArray *)waveColors
+{
+    _waveColors = [NSArray arrayWithArray:waveColors];
+    [self invalidateBlendedColorCache];
 }
 
 - (NSArray *)waveColors
@@ -172,6 +186,12 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
     CGFloat g = g1 * beta + g2 * fraction;
     CGFloat b = b1 * beta + b2 * fraction;
     return [UIColor colorWithRed:r green:g blue:b alpha:1.f];
+}
+
+- (void)invalidateBlendedColorCache
+{
+    self.cacheValidForWidth = 0;
+    self.blendedColorCache = @[];
 }
 
 @end

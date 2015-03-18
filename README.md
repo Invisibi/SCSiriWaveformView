@@ -1,3 +1,7 @@
+Same as original, but this fork supports gradient color waveforms:
+
+![alt Color gradient waveform](http://i.imgur.com/4TQ4Q3V.jpg)
+
 ## SCSiriWaveformView
 
 UIView subclass that reproduces the waveform effect seen in Siri on iOS 7.
